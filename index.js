@@ -1,0 +1,17 @@
+const express = require('express');
+require('dotenv').config();
+const { mainRouter } = require('./src/routes/mainPageRoute');
+const { authRouter } = require('./src/routes/authRoutes');
+const { productRouter } = require('./src/routes/productRoutes');
+const { orderRouter } = require('./src/routes/orderRoutes');
+const app = express();
+const port = 3000;
+
+app.use(express.json());
+
+app.use('/', mainRouter);
+app.use('/', authRouter);
+app.use('/', productRouter);
+app.use('/', orderRouter);
+
+app.listen(port, () => console.log(`App successfully running on ${port} port`));
