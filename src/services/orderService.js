@@ -6,7 +6,7 @@ const userRepository = require('../repositories/userRepository');
 
 exports.createOrder = async (userId, items) => {
 
-  const client = await pool.query('BEGIN');
+ // const client = await pool.query('BEGIN');
 
   const order = await orderRepository.createOrder(userId);
   let totalPrice = 0;
