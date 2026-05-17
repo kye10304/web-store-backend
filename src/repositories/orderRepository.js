@@ -31,3 +31,21 @@ exports.createOrderItems = async (
           return orderItems.rows[0];    
     }
 
+exports.findOrderById = async(orderId) => {
+    const result = await pool.query(
+        `SELECT * FROM orders WHERE id =$1;`, [
+            orderId
+        ]
+    )
+    return result.rows[0]
+}
+
+exports.updateStatus = async (orderId, orderStatus) => {
+    const result = await pool.query(
+        `UPDATE orders SET status = $1 where id =$2 RETURNING *;`, [
+            orderStatus,
+            orderId,            
+        ]
+    )
+    return result.rows[0]
+}
