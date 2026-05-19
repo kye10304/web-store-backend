@@ -4,3 +4,8 @@ exports.products = async (req, res) => {
     const productsList = await productRepository.products(req.body)
     res.status(200).json(productsList);
 };
+
+exports.productsByCategory = async (req, res) => {
+    const productsList = await productRepository.productByCategory(req.params.category);
+    res.status(200).json(productsList);
+}
