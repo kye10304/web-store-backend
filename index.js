@@ -11,9 +11,9 @@ const port = 3000;
 app.use(express.json());
 
 app.use('/', mainRouter);
-app.use('/', authRouter);
-app.use('/', productRouter);
-app.use('/', orderRouter);
-app.use('/', userRouter);
+app.use('/auth', authRouter);
+app.use('/products', productRouter);
+app.use('/order', orderRouter);
+app.use('/user', userRouter);
 
 app.listen(port, () => console.log(`App successfully running on ${port} port`));
