@@ -1,2 +1,5 @@
 node_modules/
 .env
+src/repositories/orderRepository.js
+src/repositories/productRepository.js
+src/repositories/userRepository.js
