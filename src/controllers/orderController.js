@@ -13,17 +13,20 @@ exports.createOrder = async (req, res) => {
 
 exports.updateOrderStatus = async (req, res) => {
     const orderId = req.params.id;
-    const orderStatus = req.body.status;
 
-    if (orderStatus != 'In_Progress' || 'Cancelled') {
-        throw new Error('Not allowed. Admin can chenge status only to "In_Progress" or "Cancelled"')
-    }
 
     const order = await orderService.updateOrder(
         orderId,
-        orderStatus
+        req.body.status
     );
-    res.status(201).json(order)
+
+    if (!order) {
+        return res.status(404).json({
+            message: 'Order not found'
+        });
+    }
+
+    res.status(200).json(order)
 }
 
 exports.orderPayment = async (req, res) => {

@@ -1,4 +1,4 @@
-const userRepository = require('../repositories/userRepository');
+const userRepository = require('../repositories/userRepositoryORM');
 const userService = require('../services/userService');
 
 exports.checkBalance = async (req, res) => {

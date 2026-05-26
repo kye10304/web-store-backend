@@ -1,4 +1,4 @@
-const pool = require('../../db.js');
+/*const pool = require('../../db.js');
 
 exports.addTotalPrice = async (totalPrice, orderId) => {
     const result = await pool.query(
@@ -48,4 +48,4 @@ exports.updateStatus = async (orderId, orderStatus) => {
         ]
     )
     return result.rows[0]
-}
+}*/

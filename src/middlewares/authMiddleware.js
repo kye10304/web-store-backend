@@ -19,7 +19,6 @@ module.exports = (req, res, next) => {
 
     console.log('DECODED JWT:', decoded);
 
-
     req.user = {
       id: decoded.id,
       email: decoded.email,

@@ -1,4 +1,4 @@
-const pool = require('../../db.js');
+/*const pool = require('../../db.js');
 
 exports.products = async () => {
     const result = await pool.query(
@@ -17,4 +17,4 @@ exports.productByCategory = async (category) => {
         `SELECT title AS product_title, price FROM products WHERE category = $1`, 
         [category]);
         return result.rows
-} 
+} */

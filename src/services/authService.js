@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const userRepository = require('../repositories/userRepository')
+const userRepository = require('../repositories/userRepositoryORM')
 
 const register = async ({ email, password }) => {
   //робимо перевірку чи не було вже зареєстровано такого користувача з таким email
@@ -42,6 +42,7 @@ const login = async ({ email, password }) => {
   const token = jwt.sign(
     {
       id: user.id,
+      email: user.email,
       role: user.role
     },
     process.env.JWT_SECRET,

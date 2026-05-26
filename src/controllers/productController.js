@@ -1,4 +1,4 @@
-const productRepository = require('../repositories/productRepository.js')
+const productRepository = require('../repositories/productRepositoryORM.js')
 
 exports.products = async (req, res) => {
     const productsList = await productRepository.products(req.body)

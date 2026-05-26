@@ -1,4 +1,4 @@
-const userRepository = require('../repositories/userRepository');
+const userRepository = require('../repositories/userRepositoryORM');
 
 exports.topUpBalance = async (userId, deposit) => {
     if (deposit < 1) {

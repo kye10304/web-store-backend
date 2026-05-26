@@ -1,17 +1,24 @@
-const orderRepository = require('../repositories/orderRepository');
-const productRepository = require('../repositories/productRepository');
-const userRepository = require('../repositories/userRepository');
+const orderRepository = require('../repositories/orderRepositoryORM');
+const productRepository = require('../repositories/productRepositoryORM');
+const userRepository = require('../repositories/userRepositoryORM');
+const {sequelize} = require('../models');
 
-//Надо написать transaction
+/*
+ * Create order
+ *
+ * @param {number} userId
+ * @param {Array<{productId: number, quantity: number}>} items
+ */
 
 exports.createOrder = async (userId, items) => {
 
- // const client = await pool.query('BEGIN');
+  const transaction = await sequelize.transaction();
 
-  const order = await orderRepository.createOrder(userId);
+  try {
+  const order = await orderRepository.createOrder(userId, {transaction});
   let totalPrice = 0;
   for (let item of items) {
-    const product = await productRepository.productById(item.productId);
+    const product = await productRepository.productById(item.productId, {transaction});
 
     if (!product) {
       throw new Error(`Product not found: ${item.productId}`);
@@ -21,14 +28,23 @@ exports.createOrder = async (userId, items) => {
       order.id,
       item.productId,
       item.quantity,
-      product.price
-    )
-    await orderRepository.addTotalPrice(totalPrice, order.id);
+      product.price,
+      {transaction}
+    );
   }
+
+  await orderRepository.addTotalPrice(totalPrice, order.id, {transaction});
+
+  await transaction.commit()
+
   return {
     ...order,
     total_price: totalPrice
   };
+} catch (err) {
+    await transaction.rollback();
+    throw err
+} 
 };
 
 exports.updateOrder = async (orderId, orderStatus) => {
@@ -47,7 +63,7 @@ exports.orderPayment = async (orderId, userId) => {
   const orderPrice = order.total_price;
   const balance = await userRepository.userBalanceById(userId);
   if (orderPrice > balance) {
-    throw new Error('НЕДОСТАТНЬО КОШТІВ НА РАХУНКУ, ДРУЖЕ!');
+    throw new Error('Insufficient funds in the account!');
   } 
 
   const updateOrderStatus = await orderRepository.updateStatus(orderId, 'Paid');

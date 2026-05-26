@@ -1,4 +1,4 @@
-const pool = require('../../db.js');
+/*const pool = require('../../db.js');
 
 exports.findByEmail = async (email) => {
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [
@@ -29,11 +29,9 @@ exports.create = async ({ email, passwordHash }) => {
 
 exports.updateBalance = async (userId, amount) => {
     const result = await pool.query(
-        `UPDATE users SET balance = balance + $1 WHERE id = $2 RETURNING id, balance`, 
-        [
-            amount, 
-            userId
-        ] 
-    )
+        `UPDATE users SET balance = balance + $1 WHERE id = $2 RETURNING id, balance`,
+        [amount, userId]
+    );
     return result.rows[0];
-}
+};
+*/
