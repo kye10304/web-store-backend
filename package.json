@@ -1,7 +1,7 @@
 {
   "name": "web-store-project",
   "version": "1.0.0",
-  "main": "dist/app.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "cross-env NODE_ENV=test jest --runInBand"
