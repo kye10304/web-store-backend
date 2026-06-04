@@ -19,13 +19,14 @@ exports.userBalanceById = async (userId) => {
 
 exports.create = async ({ email, passwordHash }) => {
     const user = await User.create({ email, 
-        password_hash: passwordHash});
+        passwordHash});
         return user.toJSON();
     };    
     
 exports.updateBalance = async (userId, amount) => {
+    const numericAmount = Number(amount)
     await User.increment(
-        {balance: amount},
+        {balance: numericAmount},
         {where: {id: userId}}
     );
 

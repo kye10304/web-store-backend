@@ -1,16 +1,17 @@
+require('./src/config/env');
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-    'retailprocure',
-    'retailprocure',
-    'retailprocure_password',
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
-        host: 'localhost',
-        port: '5433',
-        dialect: 'postgres',
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        dialect: process.env.DB_DIALECT,
         logging: false
     }
-)
+);
 
 const connectDB = async () => {
     try {

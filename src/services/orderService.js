@@ -18,11 +18,20 @@ exports.createOrder = async (userId, items) => {
   const order = await orderRepository.createOrder(userId, {transaction});
   let totalPrice = 0;
   for (let item of items) {
-    const product = await productRepository.productById(item.productId, {transaction});
-
+    const productsById = await productRepository.products({id: item.productId}, {transaction});
+    const product = productsById[0]
     if (!product) {
       throw new Error(`Product not found: ${item.productId}`);
     }
+    
+    if (product.stock < item.quantity) {
+      const error = new Error(`"${product.product_title}" out of stock`);
+        error.statusCode = 400;
+        throw error;
+    }
+
+    await productRepository.stockUpdate(product.id, item.quantity)
+
     totalPrice += product.price*item.quantity;
     await orderRepository.createOrderItems(
       order.id,
@@ -60,14 +69,13 @@ exports.updateOrder = async (orderId, orderStatus) => {
 
 exports.orderPayment = async (orderId, userId) => {
   const order = await orderRepository.findOrderById(orderId);
-  const orderPrice = order.total_price;
-  const balance = await userRepository.userBalanceById(userId);
-  if (orderPrice > balance) {
+  const orderPrice = Number(order.total_price);
+  const userBalance = await userRepository.userBalanceById(userId);
+  if (orderPrice > userBalance.balance) {
     throw new Error('Insufficient funds in the account!');
   } 
 
   const updateOrderStatus = await orderRepository.updateStatus(orderId, 'Paid');
-  const newBalance = balance - orderPrice;
   const updateUserBalance = await userRepository.updateBalance(userId, -orderPrice);
-  return { updateOrderStatus, updateUserBalance, newBalance };
+  return { updateOrderStatus, updateUserBalance};
 }

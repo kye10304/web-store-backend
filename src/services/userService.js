@@ -5,7 +5,6 @@ exports.topUpBalance = async (userId, deposit) => {
         throw new Error('Invalid operation. Your deposit cannot be less than 1$')
     };
 
-    return await userRepository.topUpBalance(userId, deposit);
+    return await userRepository.updateBalance(userId, deposit);
 
 }
-

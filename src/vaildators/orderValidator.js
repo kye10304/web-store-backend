@@ -22,11 +22,11 @@ exports.orderIdSchema = Joi.object({
 
 exports.updateOrderStatusSchema = Joi.object({
     status: Joi.string()
-    .valid('In_Progress', 'Cancelled')
+    .valid('In_Progress', 'Cancelled', 'Executed')
     .required()
 });
 
-//orderRouter.patch('/orderPayment/:id', authMiddleware, roleMiddleware('user'), orderController.orderPayment)
+//orderRouter.patch('/orderPayment/:id', authMiddleware, roleMiddleware('user'), orderController.orderPayment) 
 exports.orderPaymentSchema = Joi.object({
-    orderId: Joi.number().integer().positive().required()
+    id: Joi.number().integer().positive().required()
 })

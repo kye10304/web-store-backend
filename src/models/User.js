@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
         passwordHash: {
             type: DataTypes.TEXT,
             allowNull: false,
-            field: 'password_hash'
+            field: 'password_hash',
         },
 
         role: {

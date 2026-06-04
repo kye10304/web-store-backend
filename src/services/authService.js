@@ -15,7 +15,6 @@ const register = async ({ email, password }) => {
   /*повертаємо функцію яка міститься у userRepository. Відповіідна функція має записати у базу данних 
   користувача, де email та password_hash ми записуємо за допомогою цієї функції, а інші данні вже є дефолтними в SQL таблиці.
   */
- 
   return userRepository.create({
     email,
     passwordHash
@@ -32,7 +31,7 @@ const login = async ({ email, password }) => {
 
   const isMatch = await bcrypt.compare(
     password,
-    user.password_hash
+    user.passwordHash
   )
 
   if (!isMatch) {

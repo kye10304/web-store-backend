@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const {PRODUCT_CATEGORIES} = require('../config/constants')
 
 module.exports = (sequelize) => {
     return sequelize.define('Product', {
@@ -25,7 +26,7 @@ module.exports = (sequelize) => {
         }, 
 
         category: {
-            type: DataTypes.ENUM('food', 'electronics'),
+            type: DataTypes.ENUM(...PRODUCT_CATEGORIES),
             allowNull: false
         }
     }, {

@@ -18,7 +18,8 @@ module.exports = (sequelize) => {
                 'Created', 
                 'In_Progress', 
                 'Paid', 
-                'Cancelled'),
+                'Cancelled',
+                'Executed'),
             allowNull: false,
             defaultValue: 'Created'            
         },

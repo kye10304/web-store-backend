@@ -1,11 +1,14 @@
 const productRepository = require('../repositories/productRepositoryORM.js')
 
 exports.products = async (req, res) => {
-    const productsList = await productRepository.products(req.body)
-    res.status(200).json(productsList);
-};
+    try {
+        const productsList = await productRepository.products(req.query)
+        res.status(200).json(productsList);
+    } catch (err) {
+        const statusCode = err.statusCode || 500;
 
-exports.productsByCategory = async (req, res) => {
-    const productsList = await productRepository.productByCategory(req.params.category);
-    res.status(200).json(productsList);
-}
+        return res.status(statusCode).json({
+            message: err.message
+        })
+    }
+};
